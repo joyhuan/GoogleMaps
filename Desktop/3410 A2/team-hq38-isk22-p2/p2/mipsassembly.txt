@@ -1,0 +1,66 @@
+#Tests arithmetic operations and forwarding
+ADDIU $10,$0,1
+ADDU $11,$10,$10
+ADDU $12,$11,$10
+SUBU $9,$13,$12
+
+#Tests immediate and variable shifting (both arithmetic and logical)
+SLLV $1,$11,$10
+SRLV $2,$11,$10
+SRAV $3,$11,$10
+SLL $4,$11,1
+SRL $5,$11,1
+SRA $6,$11,1
+
+#Tests loading
+LUI $7,2
+LUI $9,15
+
+#Tests that pipelining is able to set WE to 0 for table B instructions
+ADDIU $1,$0,1
+ADDIU $2,$0,2
+LW $1,1($2)
+LB $1,1($2)
+LBU $1,1($2)
+SW $1,2($2)
+SB $1,2($2)
+BLTZ $26, 20
+BLEZ $26, 20
+BGTZ $22, 8
+BGEZ $26, 12
+J 4
+JR $12
+JAL 28
+JALR $4, $13
+BEQ $3, $7, 16
+BNE $18, $8, 28
+
+#Logical operators (immediate and variable)
+XOR $14,$13,$12
+XORI $14,$13,1
+OR $14,$13,$12
+NOR $14,$13,$12
+ORI $16,$13,3
+AND $15,$13,$12
+ANDI $17,$13,3
+
+#MOVN/MOVZ testing (notice that we will attempt loading 
+#into the 0 register, but this will set WE to 0)
+MOVN $25,$10,$9
+MOVN $26,$10,$11
+MOVN $27,$10,$0
+MOVN $0,$9,$9
+MOVZ $0,$9,$0
+MOVZ $0,$9,$0
+MOVZ $28,$10,$11
+MOVZ $29,$10,$9
+
+#SLT testing
+SLT $12,$9,$10
+SLTI $13,$9,5
+SLTU $12,$9,$10
+SLTIU $15,$9,5
+SLTI $14,$9,5
+SLT $14,$10,$9
+
+
